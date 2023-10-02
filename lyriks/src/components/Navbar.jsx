@@ -1,33 +1,40 @@
 import React from "react";
-import homeIcon from "../assets/home.svg";
-import locationIcon from "../assets/location.svg";
-import peopleIcon from "../assets/people.svg";
-import chartIcon from "../assets/chart.svg";
+import searchIcon from "../assets/search.svg";
 
-export default function Navbar() {
+export default function Navbar({setInputsData}) {
+  
+  function handleChange(e) {
+    setInputsData((prevInputsData) => {
+      return {
+        ...prevInputsData,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
 
   return (
     <nav>
-      <div className="logo-container">
-        <img src="https://jsm-lyriks-app.netlify.app/assets/logo.32aea7f0.svg" alt="lyriks-logo" />
+      <div onChange={handleChange} className="input-container">
+        <img className="search-icon" src={searchIcon} alt="search-icon" />
+        <input type="text" name="song" placeholder="Search..." />
       </div>
-      <div className="links">
-        <div className="link-container">
-          <img src={homeIcon} alt="home-icon" />
-          <div className="label">Discover</div>
-        </div>
-        <div className="link-container">
-          <img src={locationIcon} alt="location-icon" />
-          <div  className="label">Around You</div>
-        </div>
-        <div className="link-container">
-          <img src={peopleIcon} alt="people-icon" />
-          <div className="label">Top Artists</div>
-        </div>
-        <div className="link-container">
-          <img src={chartIcon} alt="chart-icon" />
-          <div className="label">Top Charts</div>
-        </div>
+      <div onChange={handleChange} className="genre-selector-container">
+        <select name="genre">
+          <option value="POP">Pop</option>
+          <option value="HIP-HOP">Hip Hop</option>
+          <option value="DANCE">Dance</option>
+          <option value="ELECTRONIC">Electronic</option>
+          <option value="SOUL">Soul</option>
+          <option value="ALTERNATIVE">Alternative</option>
+          <option value="ROCK">Rock</option>
+          <option value="LATIN">Latin</option>
+          <option value="FILM">Film</option>
+          <option value="COUNTRY">Country</option>
+          <option value="WORLDWIDE">Worldwide</option>
+          <option value="REGGAE">Reggae</option>
+          <option value="HOUSE">House</option>
+          <option value="K-POP">K-Pop</option>
+        </select>
       </div>
     </nav>
   )

@@ -8,6 +8,11 @@ body {
   min-height: 100vh;
 }
 
+main {
+  background-color: #060652;
+  padding: 24px;
+}
+
 .app {
   display: grid;
   grid-template-columns: 1.1fr 5fr;
