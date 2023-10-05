@@ -1,7 +1,11 @@
 .sidebar {
   background-color: #191624;
-  height: 100vh;
-  padding: 30px 18px
+  padding: 30px 18px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 220px
 }
 
 .logo-container {

@@ -25,6 +25,7 @@ select {
   background-color: transparent;
   border: none;
   margin-left: 12px;
+  color: white
 }
 
 .input-container input::placeholder {

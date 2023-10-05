@@ -11,9 +11,11 @@ body {
 main {
   background-color: #060652;
   padding: 24px;
+  position: absolute;
+  left: 220px
 }
 
-.app {
-  display: grid;
-  grid-template-columns: 1.1fr 5fr;
+
+.music-section {
+  width: 67%;
 }
