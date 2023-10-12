@@ -1,13 +1,27 @@
 .song-cards-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   margin: 0;
   gap: 18px;
   margin-top: 24px
 }
 
+.song-background {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .song-background > img {
   height: 200px
+}
+
+.play-icon {
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  width: 90px
 }
 
 .card {

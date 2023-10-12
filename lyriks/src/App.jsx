@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import MusicCard from "./components/MusicCard";
@@ -34,16 +34,22 @@ export default function App() {
         section === 'search' ? setSongs(data.tracks.hits) : setSongs(data.tracks)
       })
       .catch(error => alert(error))
+
+  
   }, [inputsData.genre, section, inputsData.song])
   
   const songCard = songs.map(song => {
+    console.log(song.url)
     return <MusicCard 
+      songs={songs}
+      section={section}
+      id={song.key}
       img={section === 'search' ? song.images.blurred : song.images.coverart}
       title={section === 'search' ? song.heading.title : song.title}
       artist={section === 'search' ? song.heading.subtitle : song.subtitle}
     />
   })
-  console.log(songs, section)
+  console.log(songs)
 
   return (
     <div className="app">
@@ -55,7 +61,6 @@ export default function App() {
             {songCard}
           </div>
         </div>
-        
       </main>
     </div>
   )
