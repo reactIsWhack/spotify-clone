@@ -1,0 +1,13 @@
+.song-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: black;
+  z-index: 100;
+}
+
+.pause-icon {
+  height: 50px
+}

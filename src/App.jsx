@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import MusicCard from "./components/MusicCard";
+import SongNavbar from "./components/SongNavbar.jsx";
 
 export default function App() {
 
@@ -11,6 +12,8 @@ export default function App() {
   });
   const [songs, setSongs] = useState([]);
   const [section, setSection] = useState('discover');
+  const [isPlaying, setIsPlaying] = useState(false)
+  console.log(isPlaying);
  
   useEffect(() => {
     console.log(section)
@@ -47,6 +50,7 @@ export default function App() {
       img={section === 'search' ? song.images.blurred : song.images.coverart}
       title={section === 'search' ? song.heading.title : song.title}
       artist={section === 'search' ? song.heading.subtitle : song.subtitle}
+      setIsPlaying={setIsPlaying}
     />
   })
   console.log(songs)
@@ -61,6 +65,8 @@ export default function App() {
             {songCard}
           </div>
         </div>
+      <SongNavbar />
+
       </main>
     </div>
   )

@@ -4,6 +4,7 @@ import App from "./App";
 import "./styles/General.css";
 import "./styles/Sidebar.css";
 import "./styles/Navbar.css";
-import "./styles/MusicCard.css"
+import "./styles/MusicCard.css";
+import "./styles/SongNavbar.css";
 
 ReactDOM.render(<App />, document.getElementById('root'));

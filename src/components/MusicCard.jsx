@@ -10,7 +10,6 @@ export default function MusicCard({img, title, artist, songs, id}) {
   const correctedTitle = firstLetterCapitilized + restOfTitle;
   const [playButtonHidden, setPlayButtonHidden] = useState(false);
 
-
   function handleMouseOver() {
     setPlayButtonHidden(true)
   }
@@ -49,18 +48,18 @@ export default function MusicCard({img, title, artist, songs, id}) {
     selected.audio.play()
   }
 
-
-
   return (
-    <div className="card">
-      <div onMouseOver={() => handleMouseOver()} onMouseLeave={handleMouseLeave} className="song-background">
-        <img src={img} alt="song-background" />
-        {playButtonHidden && <img className="play-icon" id={id} onClick={playMusic} src={playIcon} />}
+    <>
+      <div className="card">
+        <div onMouseOver={() => handleMouseOver()} onMouseLeave={handleMouseLeave} className="song-background">
+          <img src={img} alt="song-background" />
+          {playButtonHidden && <img className="play-icon" id={id} onClick={playMusic} src={playIcon} />}
+        </div>
+        <div className="song-info">
+          <div className="title">{correctedTitle}</div>
+          <div className="artist">{artist}</div>
+        </div>
       </div>
-      <div className="song-info">
-        <div className="title">{correctedTitle}</div>
-        <div className="artist">{artist}</div>
-      </div>
-    </div>
+    </>
   )
 }
