@@ -12,11 +12,14 @@ export default function App() {
   });
   const [songs, setSongs] = useState([]);
   const [section, setSection] = useState('discover');
-  const [isPlaying, setIsPlaying] = useState(false)
-  console.log(isPlaying);
+  const [isPlaying, setIsPlaying] = useState(false);
+  // set to strue when the play button is clicked
+  const [audios, setAudios] = useState([]);
+  const [selectedAudio, setSelectedAudio] = useState({});
+  const [isPaused, setIsPaused] = useState(false);
+  console.log(selectedAudio);
  
   useEffect(() => {
-    console.log(section)
     let url;
     if (section === 'discover') {
       url = `https://shazam-core7.p.rapidapi.com/charts/get-top-songs-in_world_by_genre?genre=${inputsData.genre}&limit=30&lang=en`;
@@ -42,7 +45,6 @@ export default function App() {
   }, [inputsData.genre, section, inputsData.song])
   
   const songCard = songs.map(song => {
-    console.log(song.url)
     return <MusicCard 
       songs={songs}
       section={section}
@@ -51,6 +53,10 @@ export default function App() {
       title={section === 'search' ? song.heading.title : song.title}
       artist={section === 'search' ? song.heading.subtitle : song.subtitle}
       setIsPlaying={setIsPlaying}
+      setAudios={setAudios}
+      audios={audios}
+      setSelectedAudio={setSelectedAudio}
+      setIsPaused={setIsPaused}
     />
   })
   console.log(songs)
@@ -65,8 +71,7 @@ export default function App() {
             {songCard}
           </div>
         </div>
-      <SongNavbar />
-
+      {isPlaying && <SongNavbar selectedAudio={selectedAudio} setIsPaused={setIsPaused} isPaused={isPaused} />}
       </main>
     </div>
   )

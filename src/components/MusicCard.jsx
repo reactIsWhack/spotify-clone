@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import playIcon from "../assets/playIcon.svg";
 let audios = []
 
-export default function MusicCard({img, title, artist, songs, id}) {
+export default function MusicCard({img, title, artist, songs, id, setAudios, audios, setIsPlaying, setSelectedAudio, setIsPaused}) {
   
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();
@@ -18,33 +18,46 @@ export default function MusicCard({img, title, artist, songs, id}) {
     setPlayButtonHidden(false)
   }
 
-  let a = new Audio()
   let matchingSong;
-
   function playMusic(e) {
+    setIsPaused(false)
+    setIsPlaying(true)
     const id = e.target.id;
     const selectedSong = songs.find(song => song.key === id);
+    console.log(selectedSong);
+    const a = new Audio(selectedSong.hub.actions[1].uri);
+    // creates an audio object, which will play the song
+    const songObj = {
+      audio: a,
+      song: selectedSong
+    };
+    // adds a song to an array of audios
+    setAudios(prevAudios => [...prevAudios, songObj]);
+    console.log(audios, 'audios')
     audios.forEach(audio => {
       if (audio.song.key === id) {
         matchingSong = audio
       }
+      // checks if the user clicks on a song that they had previousoly clicked on
     });
-    a = new Audio(selectedSong.hub.actions[1].uri);
     console.log(matchingSong);
     audios.push({audio: a, song: selectedSong})
     const songsNotPlaying = audios.filter(audio => audio.song.key !== id);
     const mutedSongs = songsNotPlaying.map(song => {
-      song.audio.muted = true
+      song.audio.pause()
       song.audio.currentTime = 0
       return song
     });
     if (matchingSong) {
       const matchingAudio = audios.find(audio => audio.song.key === matchingSong.song.key);
       matchingAudio.audio.muted = false
+      // mutes all other songs except the one the user clicked. 
     }
     const selected = audios.find(audio => audio.song.key === id);
-    audios = [...mutedSongs, selected];
-    console.log(audios);
+    setSelectedAudio(selected)
+    // sets audios array to only have one audio object that is not muted
+    setAudios([...mutedSongs, selected])
+    // plays audio
     selected.audio.play()
   }
 
