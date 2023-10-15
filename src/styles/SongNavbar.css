@@ -3,7 +3,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 90px;
+  height: 100px;
   background-color: rgba(230, 216, 216, 0.2);
   display: flex;
   align-items: center;
@@ -16,8 +16,9 @@
 
 .pause-icon,
 .nav-play-icon {
-  height: 40px;
-  cursor: pointer
+  height: 35px;
+  cursor: pointer;
+  margin: 0 1.6em
 }
 
 .nav-song-info {
@@ -40,4 +41,15 @@
 .nav-artist {
   color: white;
   font-size: 13.5px;
+}
+
+.tools {
+  display: flex;
+  align-items: center
+}
+
+.fast-forward-icon,
+.rewind-icon {
+  height: 30px;
+  cursor: pointer
 }

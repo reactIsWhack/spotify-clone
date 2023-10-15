@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from "react";
 import playIcon from "../assets/playIcon.svg";
-let audios = []
 
 export default function MusicCard({img, title, artist, songs, id, setAudios, audios, setIsPlaying, setSelectedAudio, setIsPaused}) {
   
@@ -59,6 +58,7 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
     setAudios([...mutedSongs, selected])
     // plays audio
     selected.audio.play()
+    selected.audio.currentTime = 0
   }
 
   return (

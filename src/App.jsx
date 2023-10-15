@@ -22,22 +22,23 @@ export default function App() {
   useEffect(() => {
     let url;
     if (section === 'discover') {
-      url = `https://shazam-core7.p.rapidapi.com/charts/get-top-songs-in_world_by_genre?genre=${inputsData.genre}&limit=30&lang=en`;
+      url = `https://shazam-core.p.rapidapi.com/v1/charts/genre-country?country_code=US&genre_code=${inputsData.genre}`;
     } else if (section === 'search') {
-      url = `https://shazam-core7.p.rapidapi.com/search?term=${inputsData.song}&limit=10`;
+      url = `https://shazam-core.p.rapidapi.com/v1/search/multi?query=${null}&search_type=${inputsData.song}`;
     }
     const options = {
       method: 'GET',
       headers: {
         'X-RapidAPI-Key': '001219ae62mshb12295d07ec4632p1bee87jsnc116a60c6e99',
-        'X-RapidAPI-Host': 'shazam-core7.p.rapidapi.com'
+        'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
       }
     };
 
     fetch(url, options)
       .then(res => res.json())
       .then(data => {
-        section === 'search' ? setSongs(data.tracks.hits) : setSongs(data.tracks)
+        console.log(data)
+        section === 'search' ? setSongs(data.detail) : setSongs(data)
       })
       .catch(error => alert(error))
 
@@ -71,7 +72,7 @@ export default function App() {
             {songCard}
           </div>
         </div>
-      {isPlaying && <SongNavbar selectedAudio={selectedAudio} setIsPaused={setIsPaused} isPaused={isPaused} />}
+      {isPlaying && <SongNavbar selectedAudio={selectedAudio} setIsPaused={setIsPaused} isPaused={isPaused} setSelectedAudio={setSelectedAudio} songs={songs} setAudios={setAudios} />}
       </main>
     </div>
   )

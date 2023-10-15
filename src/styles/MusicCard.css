@@ -1,6 +1,6 @@
 .song-cards-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   margin: 0;
   gap: 18px;
   margin-top: 24px
