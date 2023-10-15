@@ -1,7 +1,7 @@
 import React, {useRef} from "react";
 import searchIcon from "../assets/search.svg";
 
-export default function Navbar({setInputsData, setSection, setSongs, section}) {
+export default function Navbar({setInputsData, setSection, setSongs, section, inputsData, setIsPlaying, selectedAudio}) {
   
   const input = useRef();
   function handleChange(e) {
@@ -11,6 +11,9 @@ export default function Navbar({setInputsData, setSection, setSongs, section}) {
         [e.target.name]: e.target.value
       }
     })
+    setIsPlaying(false);
+    selectedAudio.audio.pause();
+    selectedAudio.audio.currentTime = 0
   }
 
   function handleSubmit(e) {
@@ -25,6 +28,14 @@ export default function Navbar({setInputsData, setSection, setSongs, section}) {
     )))
   }
 
+  function editTitle() {
+    const title = inputsData.genre;
+    const firstLetter = title[0];
+    const restOfLetters = title.slice(1);
+    const lowerCaseLetters = restOfLetters.toLowerCase();
+    return firstLetter + lowerCaseLetters
+  }
+
   return (
     <nav>
       <div className="input-container">
@@ -32,6 +43,7 @@ export default function Navbar({setInputsData, setSection, setSongs, section}) {
         <input ref={input} type="text" name="song" placeholder="Search..." />
       </div>
       {section !== 'search' && <div onChange={handleChange} className="genre-selector-container">
+        <div className="header">{`Discover ${editTitle()}`}</div>
         <select name="genre">
           <option value="POP">Pop</option>
           <option value="HIP_HOP_RAP">Hip Hop</option>

@@ -8,8 +8,9 @@ select {
 
 .genre-selector-container {
   display: flex;
-  justify-content: right;
-  margin-top: 20px
+  margin-top: 20px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .search-icon {
@@ -32,4 +33,10 @@ select {
 .input-container input::placeholder {
   color: #c8cacd;
   font-size: 16px;
+}
+
+.header {
+  color: white;
+  font-weight: 700;
+  font-size: 26px;
 }

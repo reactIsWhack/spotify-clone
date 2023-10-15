@@ -67,7 +67,7 @@ export default function App() {
       <Sidebar setSection={setSection} setSongs={setSongs} section={section} />
       <main>
         <div className="music-section">
-          <Navbar setInputsData={setInputsData} section={section} setSection={setSection} setSongs={setSongs} />
+          <Navbar setInputsData={setInputsData} section={section} setSection={setSection} setSongs={setSongs} inputsData={inputsData} setIsPlaying={setIsPlaying} selectedAudio={selectedAudio} />
           <div className="song-cards-container">
             {songCard}
           </div>

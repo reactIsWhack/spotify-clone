@@ -43,6 +43,11 @@
   font-size: 13.5px;
 }
 
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .tools {
   display: flex;
   align-items: center
@@ -52,4 +57,19 @@
 .rewind-icon {
   height: 30px;
   cursor: pointer
+}
+
+.fast-forward-icon {
+  margin-right: 1.6em
+}
+
+.replay-icon,
+.spin-icon {
+  height: 20px;
+  margin-right: 1.6em;
+  cursor: pointer
+}
+
+.replay-icon:hover {
+  stroke: red
 }
