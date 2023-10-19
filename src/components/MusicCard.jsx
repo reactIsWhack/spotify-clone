@@ -1,7 +1,8 @@
 import React, {useEffect, useState, useRef} from "react";
 import playIcon from "../assets/playIcon.svg";
+import pauseIcon from "../assets/pauseIcon.svg";
 
-export default function MusicCard({img, title, artist, songs, id, setAudios, audios, setIsPlaying, setSelectedAudio, setIsPaused}) {
+export default function MusicCard({img, title, artist, songs, id, setAudios, audios, setIsPlaying, setSelectedAudio, setIsPaused, isPaused}) {
   
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();

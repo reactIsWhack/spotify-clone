@@ -1,16 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import pauseIcon from "../assets/pauseIcon.svg";
 import playIcon from "../assets/play-icon-2.svg";
 import fastForwardIcon from "../assets/fast-forward.svg";
 import rewindIcon from "../assets/rewind.svg";
 import replayIcon from "../assets/replay.svg";
 import spinIcon from "../assets/spin.svg";
+import volumeIcon from "../assets/volume.svg";
 
 export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSelectedAudio, songs, setAudios}) {
   
   const song = songs.find(song => song.key === selectedAudio.song.key);
   const index = songs.indexOf(song);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [volume, setVolume] = useState(1);
+  
+  // Tracks the volume inputted by the user, so the volume property of selectedAudio can be set and change the volume of the song.
+  const input = useRef();
+  // reference to volume input element
+  const progress = (volume / Number(input.current.max)) * 100;
+
 
   function pauseMusic() {
     selectedAudio.audio.pause()
@@ -63,6 +71,13 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   const styles = {
     animation: isSpinning ? 'rotate 1.5s infinite' : 'none'
   }
+
+  function handleChange(e) {
+    setVolume(e.target.value);
+    selectedAudio.audio.volume = volume;
+    
+    input.current.style.background = `linear-gradient(to right, #0040ff ${progress}%, #ccc ${progress}%)`;
+  }
   
 
   return (
@@ -81,7 +96,10 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
         <img src={fastForwardIcon} alt="fast-forward-icon" className="fast-forward-icon" onClick={fastForwardMusic} />
         <img src={spinIcon} alt="spin-icon" className="spin-icon" onClick={spinArtsitImg} />
       </div>
-
+      <div className="volume-container">
+        <img src={volumeIcon} className="volume-icon" />
+        <input type="range" min="0" max="1" step="0.01" value={volume} className="volume-bar" onChange={(e) => handleChange(e)} ref={input} />
+      </div>
     </nav>
   )
 }

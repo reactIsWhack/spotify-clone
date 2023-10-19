@@ -1,0 +1,61 @@
+.chart-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px
+}
+
+.charts > div {
+  color: white
+}
+
+.charts {
+  padding-left: 12px;
+}
+
+.chart-img {
+  height: 60px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 8px
+}
+
+.num {
+  margin-right: 8px
+}
+
+.subtitle {
+  display: flex;
+  color: white;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.sublabel {
+  font-weight: 700;
+  font-size: 18px
+}
+
+.more-label {
+  font-size: 14px;
+  cursor: pointer
+}
+
+.chart-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.chart-artist {
+  font-size: 13px;
+  margin-top: 6px;
+  width: 120px
+}
+
+.chart-play-icon {
+  margin-left: auto
+}
+
+.chart-play-icon > img {
+  height: 38px;
+  cursor: pointer
+}

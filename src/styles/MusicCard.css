@@ -17,7 +17,8 @@
   height: 200px
 }
 
-.play-icon {
+.play-icon,
+.card-pause-icon {
   position: absolute;
   z-index: 1;
   cursor: pointer;
