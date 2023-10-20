@@ -17,7 +17,6 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   // Tracks the volume inputted by the user, so the volume property of selectedAudio can be set and change the volume of the song.
   const input = useRef();
   // reference to volume input element
-  const progress = (volume / Number(input.current.max)) * 100;
 
 
   function pauseMusic() {
@@ -75,6 +74,7 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   function handleChange(e) {
     setVolume(e.target.value);
     selectedAudio.audio.volume = volume;
+  const progress = (volume / Number(input.current.max)) * 100;
     
     input.current.style.background = `linear-gradient(to right, #0040ff ${progress}%, #ccc ${progress}%)`;
   }

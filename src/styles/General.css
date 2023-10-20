@@ -16,6 +16,9 @@ main {
   display: flex;
 }
 
+div::-webkit-scrollbar{
+  width: 0 !important
+}
 
 .music-section {
   width: 67%;
@@ -25,4 +28,9 @@ main {
   padding-top: 24px;
   margin-left: 24px;
   width: 33%;
+}
+
+.top-charts-container {
+  overflow-y: scroll;
+  height: 400px
 }

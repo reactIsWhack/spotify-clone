@@ -76,6 +76,8 @@ export default function App() {
       artist={topChart.subtitle}
       audio={topChart.hub.actions[1].uri}
       number={index}
+      topCharts={topCharts}
+      id={topChart.key}
      />
   })
 
@@ -105,7 +107,9 @@ export default function App() {
           <div className="sublabel">Top Charts</div>
           <div className="more-label" onClick={showMoreCharts}>See More</div>
         </div>
-          {topChartCards}
+          <div className="top-charts-container">
+            {topChartCards}
+          </div>
         </div>}
       </main>
       {isPlaying && <SongNavbar selectedAudio={selectedAudio} setIsPaused={setIsPaused} isPaused={isPaused} setSelectedAudio={setSelectedAudio} songs={songs} setAudios={setAudios} />}

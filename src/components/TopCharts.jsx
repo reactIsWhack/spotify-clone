@@ -1,7 +1,7 @@
 import React from "react";
 import playIcon from "../assets/playIcon.svg";
 
-export default function TopCharts({img, title, artist, audio, number}) {
+export default function TopCharts({img, title, artist, audio, number, id, topCharts}) {
 
   function checkTitle() {
     if (title.length > 14) {
@@ -11,6 +11,13 @@ export default function TopCharts({img, title, artist, audio, number}) {
     return title
   }
 
+  function playAudio(e) {
+    const audioFile = e.target.getAttribute("file");
+    const id = e.target.id;
+    const audio = new Audio(audioFile);
+    const selectedAudio = topCharts.find(topChart => topChart.key === id);
+    
+  }
 
   return (
       <div className="charts">
@@ -22,7 +29,7 @@ export default function TopCharts({img, title, artist, audio, number}) {
             <div className="chart-artist">{artist}</div>
           </div>
           <div className="chart-play-icon">
-            <img src={playIcon} />
+            <img src={playIcon} file={audio} id={id} />
           </div>
         </div>
       </div>
