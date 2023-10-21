@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import pauseIcon from "../assets/pauseIcon.svg";
 import playIcon from "../assets/play-icon-2.svg";
 import fastForwardIcon from "../assets/fast-forward.svg";
@@ -42,6 +42,8 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
     
     newAudio.play();
   }
+  
+  
 
   function rewindMusic() {
     setIsPaused(false);
@@ -60,7 +62,6 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   function replayMusic() {
     selectedAudio.audio.currentTime = 0;
     selectedAudio.audio.play()
-    console.log(selectedAudio.audio.currentTime);
     setIsPaused(false);
   }
 
@@ -79,7 +80,6 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
     
     input.current.style.background = `linear-gradient(to right, #0040ff ${progress}%, #ccc ${progress}%)`;
   }
-  console.log(selectedAudio.audio.volume)
   
 
   return (

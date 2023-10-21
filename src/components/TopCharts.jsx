@@ -26,7 +26,6 @@ export default function TopCharts({img, title, artist, audio, number, id, topCha
     });
     setSelectedAudio(prevSelectedAudio => {
       const newSelectedAudio = {song: selectedChart, audio: audio};
-      console.log(prevSelectedAudio, 'prev')
       if (prevSelectedAudio.length) {
         prevSelectedAudio.audio.pause();
       }

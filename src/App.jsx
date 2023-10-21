@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import MusicCard from "./components/MusicCard";
 import SongNavbar from "./components/SongNavbar.jsx";
 import TopCharts from "./components/TopCharts";
+import TopArtists from "./components/TopArtists";
 
 export default function App() {
 
@@ -15,13 +16,15 @@ export default function App() {
   const [section, setSection] = useState('discover');
   const [isPlaying, setIsPlaying] = useState(false);
   const [topCharts, setTopCharts] = useState([]);
+  const [topArtists, setTopArtsits] = useState([]);
+  const fullTopCharts = useRef([]);
   // set to strue when the play button is clicked
   const [audios, setAudios] = useState([]);
   const [selectedAudio, setSelectedAudio] = useState({});
   const [isPaused, setIsPaused] = useState(false);
   const [count, setCount] = useState(10);
+  const [topArtistCount, setTopArtistCount] = useState(15)
   // keeps track of how many charts the user is showing;
-  console.log(selectedAudio);
  
   useEffect(() => {
     let url;
@@ -42,15 +45,32 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         section === 'search' ? setSongs(data.tracks.hits) : setSongs(data);
-        if (section === 'discover') {
-          setTopCharts(data.slice(0, 5))
-        }
       })
       .catch(error => alert(error))
 
   
   }, [inputsData.genre, section, inputsData.song])
-  console.log(topCharts, 'topcharts');
+  console.log(selectedAudio);
+
+  useEffect(() => {
+    const url = 'https://shazam-core.p.rapidapi.com/v1/charts/world';
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '001219ae62mshb12295d07ec4632p1bee87jsnc116a60c6e99',
+        'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
+      }
+    };
+
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => {
+        setTopCharts(data.slice(0, 5));
+        fullTopCharts.current = data;
+        setTopArtsits(fullTopCharts.current.slice(0, 10))
+      })
+  }, []);
+
   
   const songCard = songs.map(song => {
     return <MusicCard 
@@ -83,6 +103,10 @@ export default function App() {
       setIsPlaying={setIsPlaying}
       selectedAudio={selectedAudio}
      />
+  });
+
+  const topArtistsImages = topArtists.map(topArtist => {
+    return <TopArtists img={topArtist.images.background} />
   })
 
   function showMoreCharts() {
@@ -90,10 +114,19 @@ export default function App() {
     setTopCharts(prevTopCharts => {
       return [
         ...prevTopCharts,
-        ...songs.slice(count - 5, count)
+        ...fullTopCharts.current.slice(count - 5, count)
       ]
     });
-    setSeeMore(true)
+  }
+
+  function renderMoreArtists() {
+    setTopArtistCount(prevTopArtistCount => prevTopArtistCount + 10);
+    setTopArtsits(prevTopArtists => {
+      return [
+        ...prevTopArtists,
+        ...fullTopCharts.current.slice(topArtistCount - 10, topArtistCount)
+      ]
+    })
   }
 
   return (
@@ -113,6 +146,15 @@ export default function App() {
         </div>
           <div className="top-charts-container">
             {topChartCards}
+          </div>
+          <div className="top-artists-container">
+            <div className="subtitle">
+              <div className="sublabel">Top Artists</div>
+              <div className="more-label" onClick={renderMoreArtists}>See More</div>
+            </div>
+            <div className="artists-scrollbar">
+              {topArtistsImages}
+            </div>
           </div>
         </div>}
       </main>

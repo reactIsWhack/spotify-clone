@@ -7,5 +7,6 @@ import "./styles/Navbar.css";
 import "./styles/MusicCard.css";
 import "./styles/SongNavbar.css";
 import "./styles/TopCharts.css";
+import "./styles/TopArtists.css";
 
 ReactDOM.render(<App />, document.getElementById('root'));

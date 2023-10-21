@@ -24,7 +24,6 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
     setIsPlaying(true)
     const id = e.target.id;
     const selectedSong = songs.find(song => song.key === id);
-    console.log(selectedSong);
     const a = new Audio(selectedSong.hub.actions[1].uri);
     // creates an audio object, which will play the song
     const songObj = {
@@ -33,14 +32,12 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
     };
     // adds a song to an array of audios
     setAudios(prevAudios => [...prevAudios, songObj]);
-    console.log(audios, 'audios')
     audios.forEach(audio => {
       if (audio.song.key === id) {
         matchingSong = audio
       }
       // checks if the user clicks on a song that they had previousoly clicked on
     });
-    console.log(matchingSong);
     audios.push({audio: a, song: selectedSong})
     const songsNotPlaying = audios.filter(audio => audio.song.key !== id);
     const mutedSongs = songsNotPlaying.map(song => {
