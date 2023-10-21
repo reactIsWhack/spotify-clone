@@ -164,4 +164,5 @@ Aesthetics
   width: 80%;
   background: #fff;
   padding: 0px 10px;
+  background-color: linear-gradient(to right, #0040ff 1%, #ccc 1%);
 }

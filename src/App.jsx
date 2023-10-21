@@ -78,6 +78,10 @@ export default function App() {
       number={index}
       topCharts={topCharts}
       id={topChart.key}
+      setSelectedAudio={setSelectedAudio}
+      setAudios={setAudios}
+      setIsPlaying={setIsPlaying}
+      selectedAudio={selectedAudio}
      />
   })
 

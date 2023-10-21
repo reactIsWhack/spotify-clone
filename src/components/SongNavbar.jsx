@@ -13,9 +13,9 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   const index = songs.indexOf(song);
   const [isSpinning, setIsSpinning] = useState(false);
   const [volume, setVolume] = useState(1);
-  
-  // Tracks the volume inputted by the user, so the volume property of selectedAudio can be set and change the volume of the song.
   const input = useRef();
+  // Tracks the volume inputted by the user, so the volume property of selectedAudio can be set and change the volume of the song.
+
   // reference to volume input element
 
 
@@ -60,7 +60,8 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   function replayMusic() {
     selectedAudio.audio.currentTime = 0;
     selectedAudio.audio.play()
-    console.log(selectedAudio.audio.currentTime)
+    console.log(selectedAudio.audio.currentTime);
+    setIsPaused(false);
   }
 
   function spinArtsitImg() {
@@ -74,10 +75,11 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   function handleChange(e) {
     setVolume(e.target.value);
     selectedAudio.audio.volume = volume;
-  const progress = (volume / Number(input.current.max)) * 100;
+    const progress = (volume / Number(input.current.max)) * 100;
     
     input.current.style.background = `linear-gradient(to right, #0040ff ${progress}%, #ccc ${progress}%)`;
   }
+  console.log(selectedAudio.audio.volume)
   
 
   return (
@@ -98,7 +100,7 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
       </div>
       <div className="volume-container">
         <img src={volumeIcon} className="volume-icon" />
-        <input type="range" min="0" max="1" step="0.01" value={volume} className="volume-bar" onChange={(e) => handleChange(e)} ref={input} />
+        <input type="range" min="0" max="1" step="0.01" value={volume} className="volume-bar" onChange={handleChange} ref={input} />
       </div>
     </nav>
   )
