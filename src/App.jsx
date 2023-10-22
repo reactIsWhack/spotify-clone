@@ -23,15 +23,27 @@ export default function App() {
   const [selectedAudio, setSelectedAudio] = useState({});
   const [isPaused, setIsPaused] = useState(false);
   const [count, setCount] = useState(10);
-  const [topArtistCount, setTopArtistCount] = useState(15)
-  // keeps track of how many charts the user is showing;
+  const [topArtistCount, setTopArtistCount] = useState(15);
+  const [userLocation, setUserLocation] = useState({});
+  const [duration, setDuration] = useState(0);
+  // keeps track of how many charts the user is showing
+  const success = (position) => {
+    setUserLocation({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    })
+  }
+
+  const error = (error) => {
+    console.log(error)
+  }
  
   useEffect(() => {
     let url;
     if (section === 'discover') {
       url = `https://shazam-core.p.rapidapi.com/v1/charts/genre-country?country_code=US&genre_code=${inputsData.genre}`;
     } else if (section === 'search') {
-      url = `https://shazam-core.p.rapidapi.com/v1/search/multi?query=${inputsData.song}&search_type=SONG_ARTISTS`;
+      url = `https://shazam-core.p.rapidapi.com/v1/search/multi?query=${inputsData.song}&search_type=SONGS_ARTISTS`;
     }
     const options = {
       method: 'GET',
@@ -44,14 +56,22 @@ export default function App() {
     fetch(url, options)
       .then(res => res.json())
       .then(data => {
-        section === 'search' ? setSongs(data.tracks.hits) : setSongs(data);
+        if (section === 'search') {
+          const hits = data.tracks.hits;
+          let newSongs = [];
+          hits.forEach(hit => {
+            newSongs.push(hit.track)
+          });
+          setSongs(newSongs)
+        } else {
+          setSongs(data)
+        }
       })
       .catch(error => alert(error))
 
   
   }, [inputsData.genre, section, inputsData.song])
-  console.log(selectedAudio);
-
+  console.log(songs);
   useEffect(() => {
     const url = 'https://shazam-core.p.rapidapi.com/v1/charts/world';
     const options = {
@@ -69,6 +89,8 @@ export default function App() {
         fullTopCharts.current = data;
         setTopArtsits(fullTopCharts.current.slice(0, 10))
       })
+    
+      navigator.geolocation.getCurrentPosition(success, error);
   }, []);
 
   
@@ -77,15 +99,15 @@ export default function App() {
       songs={songs}
       section={section}
       id={song.key}
-      img={section === 'search' ? song.images.blurred : song.images.coverart}
-      title={section === 'search' ? song.heading.title : song.title}
-      artist={section === 'search' ? song.heading.subtitle : song.subtitle}
+      img={song.images.coverart}
+      title={song.title}
+      artist={song.subtitle}
       setIsPlaying={setIsPlaying}
       setAudios={setAudios}
       audios={audios}
       setSelectedAudio={setSelectedAudio}
       setIsPaused={setIsPaused}
-      isPaused={isPaused}
+      isPlaying={isPlaying}
     />
   })
   
@@ -131,7 +153,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Sidebar setSection={setSection} setSongs={setSongs} section={section} />
+      <Sidebar setSection={setSection} setSongs={setSongs} section={section} setIsPlaying={setIsPlaying} setAudios={setAudios} />
       <main>
         <div className="music-section">
           <Navbar setInputsData={setInputsData} section={section} setSection={setSection} setSongs={setSongs} inputsData={inputsData} setIsPlaying={setIsPlaying} selectedAudio={selectedAudio} />
@@ -139,7 +161,7 @@ export default function App() {
             {songCard}
           </div>
         </div>
-        {section === 'discover' && <div className="discover-sidebar">
+        <div className="discover-sidebar">
         <div className="subtitle">
           <div className="sublabel">Top Charts</div>
           <div className="more-label" onClick={showMoreCharts}>See More</div>
@@ -156,7 +178,7 @@ export default function App() {
               {topArtistsImages}
             </div>
           </div>
-        </div>}
+        </div>
       </main>
       {isPlaying && <SongNavbar selectedAudio={selectedAudio} setIsPaused={setIsPaused} isPaused={isPaused} setSelectedAudio={setSelectedAudio} songs={songs} setAudios={setAudios} />}
     </div>

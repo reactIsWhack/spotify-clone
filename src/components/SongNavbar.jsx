@@ -14,6 +14,7 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   const [isSpinning, setIsSpinning] = useState(false);
   const [volume, setVolume] = useState(1);
   const input = useRef();
+  const [progress, setProgress] = useState(0);
   // Tracks the volume inputted by the user, so the volume property of selectedAudio can be set and change the volume of the song.
 
   // reference to volume input element
@@ -21,7 +22,8 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
 
   function pauseMusic() {
     selectedAudio.audio.pause()
-    setIsPaused(true)
+    setIsPaused(true);
+    console.log(selectedAudio.audio.currentTime)
   }
 
   function resumeMusic() {
@@ -81,6 +83,36 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
     input.current.style.background = `linear-gradient(to right, #0040ff ${progress}%, #ccc ${progress}%)`;
   }
   
+  useEffect(() => {
+    function trackProgress() {
+      const duration = selectedAudio.audio.duration;
+      const currentTime = selectedAudio.audio.currentTime;
+      const progressPercent = (currentTime / duration) * 100;
+      setProgress(progressPercent);
+    }
+    
+    selectedAudio.audio.addEventListener('timeupdate', trackProgress);
+
+    return () => {
+      // Clean up event listeners when the component unmounts
+      selectedAudio.audio.removeEventListener('timeupdate', trackProgress);
+    }
+  }, [selectedAudio.audio]);
+
+  const handleProgressBarClick = (e) => {
+    const progressBar = e.currentTarget;
+    const clickX = e.clientX - progressBar.getBoundingClientRect().left;
+    const progressBarWidth = progressBar.offsetWidth;
+    const seekTime = (clickX / progressBarWidth) * selectedAudio.audio.duration;
+    selectedAudio.audio.currentTime = seekTime;
+    selectedAudio.audio.play()
+  };
+
+  useEffect(() => {
+    if (selectedAudio.audio.ended) {
+      fastForwardMusic()
+    }
+  }, [selectedAudio.audio.ended])
 
   return (
     <nav className="song-navbar">
@@ -91,12 +123,17 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
           <div className="nav-artist">{selectedAudio.song.subtitle}</div>
         </div>
       </div>
-      <div className="tools">
-        <img src={replayIcon} alt="replay-icon" className="replay-icon" onClick={replayMusic} />
-        <img src={rewindIcon} alt="rewind-icon" className="rewind-icon" onClick={rewindMusic} />
-        {!isPaused ? <img className="pause-icon" src={pauseIcon} onClick={pauseMusic} /> : <img src={playIcon} onClick={resumeMusic} className="nav-play-icon" />}
-        <img src={fastForwardIcon} alt="fast-forward-icon" className="fast-forward-icon" onClick={fastForwardMusic} />
-        <img src={spinIcon} alt="spin-icon" className="spin-icon" onClick={spinArtsitImg} />
+      <div className="all-tools">
+        <div className="tools">
+          <img src={replayIcon} alt="replay-icon" className="replay-icon" onClick={replayMusic} />
+          <img src={rewindIcon} alt="rewind-icon" className="rewind-icon" onClick={rewindMusic} />
+          {!isPaused ? <img className="pause-icon" src={pauseIcon} onClick={pauseMusic} /> : <img src={playIcon} onClick={resumeMusic} className="nav-play-icon" />}
+          <img src={fastForwardIcon} alt="fast-forward-icon" className="fast-forward-icon" onClick={fastForwardMusic} />
+          <img src={spinIcon} alt="spin-icon" className="spin-icon" onClick={spinArtsitImg} />
+        </div>
+        <div className="progress-bar" onClick={handleProgressBarClick}>
+          <div className="progress" style={{ width: `${progress}%` }}></div>
+        </div>
       </div>
       <div className="volume-container">
         <img src={volumeIcon} className="volume-icon" />

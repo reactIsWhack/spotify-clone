@@ -4,7 +4,20 @@ import locationIcon from "../assets/location.svg";
 import peopleIcon from "../assets/people.svg";
 import chartIcon from "../assets/chart.svg";
 
-export default function Sidebar({setSection, setSongs, section}) {
+export default function Sidebar({setSection, setSongs, section, setIsPlaying, setAudios}) {
+
+  function handleClick() {
+    setSection('discover');
+    setIsPlaying(false);
+    setSongs((prevSongs) => section === 'discover' ? prevSongs : []);
+    setAudios(prevAudios => {
+      return prevAudios.map(prevAudio => {
+        prevAudio.audio.pause();
+        prevAudio.audio.currentTime = 0;
+        return prevAudio
+      })
+    })
+  }
 
   return (
     <div className="sidebar">
@@ -14,11 +27,7 @@ export default function Sidebar({setSection, setSongs, section}) {
       <div className="links">
         <div className="link-container">
           <img src={homeIcon} alt="home-icon" />
-          <div onClick={() => {
-            setSection('discover')
-
-            setSongs((prevSongs) => section === 'discover' ? prevSongs : []);
-          }} className="label">Discover</div>
+          <div onClick={handleClick} className="label">Discover</div>
         </div>
         <div className="link-container">
           <img src={locationIcon} alt="location-icon" />

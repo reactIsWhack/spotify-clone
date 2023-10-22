@@ -56,7 +56,7 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
     setAudios([...mutedSongs, selected])
     // plays audio
     selected.audio.play()
-    selected.audio.currentTime = 0
+    selected.audio.currentTime = 0;
   }
 
   return (
@@ -64,7 +64,7 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
       <div className="card">
         <div onMouseOver={() => handleMouseOver()} onMouseLeave={handleMouseLeave} className="song-background">
           <img src={img} alt="song-background" />
-          {playButtonHidden && <img className="play-icon" id={id} onClick={playMusic} src={playIcon} />}
+          {playButtonHidden && <img className="play-icon" id={id} onClick={playMusic} src={playIcon}  />}
         </div>
         <div className="song-info">
           <div className="title">{correctedTitle}</div>
