@@ -6,8 +6,8 @@ import chartIcon from "../assets/chart.svg";
 
 export default function Sidebar({setSection, setSongs, section, setIsPlaying, setAudios}) {
 
-  function handleClick() {
-    setSection('discover');
+  function handleClick(e) {
+    setSection(e.target.getAttribute("section"));
     setIsPlaying(false);
     setSongs((prevSongs) => section === 'discover' ? prevSongs : []);
     setAudios(prevAudios => {
@@ -27,19 +27,19 @@ export default function Sidebar({setSection, setSongs, section, setIsPlaying, se
       <div className="links">
         <div className="link-container">
           <img src={homeIcon} alt="home-icon" />
-          <div onClick={handleClick} className="label">Discover</div>
+          <div onClick={handleClick} className="label" section={'discover'}>Discover</div>
         </div>
         <div className="link-container">
           <img src={locationIcon} alt="location-icon" />
-          <div  className="label">Around You</div>
+          <div className="label" section={'aroundYou'} onClick={handleClick}>Around You</div>
         </div>
         <div className="link-container">
           <img src={peopleIcon} alt="people-icon" />
-          <div className="label">Top Artists</div>
+          <div className="label" section={'topArtists'} onClick={handleClick}>Top Artists</div>
         </div>
         <div className="link-container">
           <img src={chartIcon} alt="chart-icon" />
-          <div className="label">Top Charts</div>
+          <div className="label" section={'topCharts'} onClick={handleClick}>Top Charts</div>
         </div>
       </div>
     </div>

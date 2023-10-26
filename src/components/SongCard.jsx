@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import playIcon from "../assets/playIcon.svg";
 
-export default function TopCharts({img, title, artist, audio, number, id, topCharts, setAudios, setSelectedAudio, setIsPlaying, selectedAudio}) {
+export default function SongCard({img, title, artist, audio, number, id, topCharts, setAudios, setSelectedAudio, setIsPlaying, setIsPaused}) {
 
   function checkTitle() {
     if (title.length > 14) {
@@ -32,7 +32,8 @@ export default function TopCharts({img, title, artist, audio, number, id, topCha
       return newSelectedAudio
     });
     audio.play();
-    setAudios(prevAudios => [...prevAudios, {song: selectedChart, audio: audio}])
+    setAudios(prevAudios => [...prevAudios, {song: selectedChart, audio: audio}]);
+    setIsPaused(false)
   }
 
   return (

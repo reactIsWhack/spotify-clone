@@ -25,15 +25,19 @@ export default function Navbar({setInputsData, setSection, setSongs, section, in
         ...prevInputsData,
         [e.target.name]: input.current.value
       }
-    )))
+    )));
   }
 
   function editTitle() {
-    const title = inputsData.genre;
-    const firstLetter = title[0];
-    const restOfLetters = title.slice(1);
-    const lowerCaseLetters = restOfLetters.toLowerCase();
-    return firstLetter + lowerCaseLetters
+    if (section === 'discover') {
+      const title = inputsData.genre;
+      const firstLetter = title[0];
+      const restOfLetters = title.slice(1);
+      const lowerCaseLetters = restOfLetters.toLowerCase();
+      return `Discover ${firstLetter + lowerCaseLetters}`
+    } else {
+      return `Showing results for ${inputsData.song}`
+    }
   }
 
   return (
@@ -42,8 +46,8 @@ export default function Navbar({setInputsData, setSection, setSongs, section, in
         <img className="search-icon" src={searchIcon} alt="search-icon" name="song" onClick={handleSubmit} />
         <input ref={input} type="text" name="song" placeholder="Search..." />
       </div>
-      {section !== 'search' && <div onChange={handleChange} className="genre-selector-container">
-        <div className="header">{`Discover ${editTitle()}`}</div>
+      {(section !== 'information') && <div onChange={handleChange} value={inputsData.genre} className="genre-selector-container">
+        <div className="header">{editTitle()}</div>
         <select name="genre">
           <option value="POP">Pop</option>
           <option value="HIP_HOP_RAP">Hip Hop</option>

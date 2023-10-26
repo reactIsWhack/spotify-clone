@@ -7,7 +7,7 @@ import replayIcon from "../assets/replay.svg";
 import spinIcon from "../assets/spin.svg";
 import volumeIcon from "../assets/volume.svg";
 
-export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSelectedAudio, songs, setAudios}) {
+export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSelectedAudio, songs, setAudios, section}) {
   
   const song = songs.find(song => song.key === selectedAudio.song.key);
   const index = songs.indexOf(song);
@@ -109,7 +109,7 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
   };
 
   useEffect(() => {
-    if (selectedAudio.audio.ended) {
+    if (selectedAudio.audio.ended && section === 'discover') {
       fastForwardMusic()
     }
   }, [selectedAudio.audio.ended])

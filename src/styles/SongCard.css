@@ -1,15 +1,15 @@
 .chart-card {
   display: flex;
   align-items: center;
-  margin-bottom: 24px
+  margin-bottom: 24px;
 }
 
 .charts > div {
-  color: white
+  color: white;
 }
 
 .charts {
-  padding-left: 12px;
+  padding-left: 16px;
 }
 
 .chart-img {
@@ -28,6 +28,7 @@
   color: white;
   margin-bottom: 20px;
   justify-content: space-between;
+  padding-left: 8px;
 }
 
 .sublabel {

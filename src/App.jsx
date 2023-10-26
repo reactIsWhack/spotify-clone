@@ -3,8 +3,9 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import MusicCard from "./components/MusicCard";
 import SongNavbar from "./components/SongNavbar.jsx";
-import TopCharts from "./components/TopCharts";
+import SongCard from "./components/SongCard";
 import TopArtists from "./components/TopArtists";
+import SongInformation from "./components/SongInformation";
 
 export default function App() {
 
@@ -15,28 +16,24 @@ export default function App() {
   const [songs, setSongs] = useState([]);
   const [section, setSection] = useState('discover');
   const [isPlaying, setIsPlaying] = useState(false);
+  // set to strue when the play button is clicked
   const [topCharts, setTopCharts] = useState([]);
   const [topArtists, setTopArtsits] = useState([]);
   const fullTopCharts = useRef([]);
-  // set to strue when the play button is clicked
   const [audios, setAudios] = useState([]);
   const [selectedAudio, setSelectedAudio] = useState({});
   const [isPaused, setIsPaused] = useState(false);
   const [count, setCount] = useState(10);
   const [topArtistCount, setTopArtistCount] = useState(15);
-  const [userLocation, setUserLocation] = useState({});
-  const [duration, setDuration] = useState(0);
-  // keeps track of how many charts the user is showing
-  const success = (position) => {
-    setUserLocation({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    })
-  }
-
-  const error = (error) => {
-    console.log(error)
-  }
+  const [songInformation, setSongInformation] = useState({});
+  const [relatedSongs, setRelatedSongs] = useState([]);
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '001219ae62mshb12295d07ec4632p1bee87jsnc116a60c6e99',
+      'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
+    }
+  };
  
   useEffect(() => {
     let url;
@@ -44,14 +41,7 @@ export default function App() {
       url = `https://shazam-core.p.rapidapi.com/v1/charts/genre-country?country_code=US&genre_code=${inputsData.genre}`;
     } else if (section === 'search') {
       url = `https://shazam-core.p.rapidapi.com/v1/search/multi?query=${inputsData.song}&search_type=SONGS_ARTISTS`;
-    }
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': '001219ae62mshb12295d07ec4632p1bee87jsnc116a60c6e99',
-        'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
-      }
-    };
+    } 
 
     fetch(url, options)
       .then(res => res.json())
@@ -67,12 +57,12 @@ export default function App() {
           setSongs(data)
         }
       })
-      .catch(error => alert(error))
 
   
   }, [inputsData.genre, section, inputsData.song])
-  console.log(songs);
+  console.log(topCharts);
   useEffect(() => {
+    setSection('discover')
     const url = 'https://shazam-core.p.rapidapi.com/v1/charts/world';
     const options = {
       method: 'GET',
@@ -85,14 +75,14 @@ export default function App() {
     fetch(url, options)
       .then(res => res.json())
       .then(data => {
-        setTopCharts(data.slice(0, 5));
-        fullTopCharts.current = data;
+        const adjustedData = data.filter(data => data.hub.actions)
+        setTopCharts(adjustedData.slice(0, 5));
+        fullTopCharts.current = adjustedData;
         setTopArtsits(fullTopCharts.current.slice(0, 10))
       })
     
-      navigator.geolocation.getCurrentPosition(success, error);
   }, []);
-
+  console.log(fullTopCharts, 'full')
   
   const songCard = songs.map(song => {
     return <MusicCard 
@@ -108,11 +98,14 @@ export default function App() {
       setSelectedAudio={setSelectedAudio}
       setIsPaused={setIsPaused}
       isPlaying={isPlaying}
+      setSection={setSection}
+      setSongInformation={setSongInformation}
+      setRelatedSongs={setRelatedSongs}
     />
   })
   
   const topChartCards = topCharts.map((topChart, index) => {
-    return <TopCharts 
+    return <SongCard 
       img={topChart.images.coverart}
       title={topChart.title}
       artist={topChart.subtitle}
@@ -124,6 +117,7 @@ export default function App() {
       setAudios={setAudios}
       setIsPlaying={setIsPlaying}
       selectedAudio={selectedAudio}
+      setIsPaused={setIsPaused}
      />
   });
 
@@ -142,11 +136,11 @@ export default function App() {
   }
 
   function renderMoreArtists() {
-    setTopArtistCount(prevTopArtistCount => prevTopArtistCount + 10);
+    setTopArtistCount(prevTopArtistCount => prevTopArtistCount + 5);
     setTopArtsits(prevTopArtists => {
       return [
         ...prevTopArtists,
-        ...fullTopCharts.current.slice(topArtistCount - 10, topArtistCount)
+        ...fullTopCharts.current.slice(topArtistCount - 5, topArtistCount)
       ]
     })
   }
@@ -155,17 +149,18 @@ export default function App() {
     <div className="app">
       <Sidebar setSection={setSection} setSongs={setSongs} section={section} setIsPlaying={setIsPlaying} setAudios={setAudios} />
       <main>
-        <div className="music-section">
-          <Navbar setInputsData={setInputsData} section={section} setSection={setSection} setSongs={setSongs} inputsData={inputsData} setIsPlaying={setIsPlaying} selectedAudio={selectedAudio} />
+      <Navbar setInputsData={setInputsData} section={section} setSection={setSection} setSongs={setSongs} inputsData={inputsData} setIsPlaying={setIsPlaying} selectedAudio={selectedAudio} />
+        {section !== 'information' && <div className="music-section">
           <div className="song-cards-container">
             {songCard}
           </div>
-        </div>
+        </div>}
+        {section === 'information' && <SongInformation songInformation={songInformation} relatedSongs={relatedSongs} selectedAudio={selectedAudio} setAudios={setAudios} setSelectedAudio={setSelectedAudio} setIsPlaying={setIsPlaying} setIsPaused={setIsPaused} />}
         <div className="discover-sidebar">
-        <div className="subtitle">
-          <div className="sublabel">Top Charts</div>
-          <div className="more-label" onClick={showMoreCharts}>See More</div>
-        </div>
+          <div className="subtitle">
+            <div className="sublabel">Top Charts</div>
+            <div className="more-label" onClick={showMoreCharts}>See More</div>
+          </div>
           <div className="top-charts-container">
             {topChartCards}
           </div>
@@ -180,7 +175,7 @@ export default function App() {
           </div>
         </div>
       </main>
-      {isPlaying && <SongNavbar selectedAudio={selectedAudio} setIsPaused={setIsPaused} isPaused={isPaused} setSelectedAudio={setSelectedAudio} songs={songs} setAudios={setAudios} />}
+      {isPlaying && <SongNavbar section={section} selectedAudio={selectedAudio} setIsPaused={setIsPaused} isPaused={isPaused} setSelectedAudio={setSelectedAudio} songs={songs} setAudios={setAudios} />}
     </div>
   )
 }

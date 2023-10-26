@@ -1,0 +1,53 @@
+.song-information-container {
+  margin-top: 100px;
+  color: white;
+  width: 60%
+}
+
+.song-credentials {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px
+}
+
+.artist-img {
+  height: 120px;
+  border-radius: 60px;
+  border: 1px solid white;
+  margin-right: 12px
+}
+
+.credentials-title {
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 5px
+}
+
+.credentials-artist {
+  font-size: 13px;
+  margin-bottom: 5px
+}
+
+.credentials-genres {
+  font-size: 13px
+}
+
+.lyrics-label,
+.related-label {
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 14px
+}
+
+.related-label {
+  margin-top: 20px
+}
+
+.related-songs {
+  width: 100%
+}
+
+.lyrics {
+  font-size: 12px;
+  line-height: 20px;
+}

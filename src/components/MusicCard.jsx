@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from "react";
 import playIcon from "../assets/playIcon.svg";
 import pauseIcon from "../assets/pauseIcon.svg";
 
-export default function MusicCard({img, title, artist, songs, id, setAudios, audios, setIsPlaying, setSelectedAudio, setIsPaused, isPaused}) {
+export default function MusicCard({img, title, artist, songs, id, setAudios, audios, setIsPlaying, setSelectedAudio, setIsPaused, setSongInformation, setSection, setRelatedSongs}) {
   
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();
@@ -59,6 +59,30 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
     selected.audio.currentTime = 0;
   }
 
+  function getSongInformation(e) {
+    const id = e.target.id;
+    const url = `https://shazam-core.p.rapidapi.com/v1/tracks/details?track_id=${id}`;
+    const relatedSongsUrl = `https://shazam-core.p.rapidapi.com/v1/tracks/related?track_id=${id}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '001219ae62mshb12295d07ec4632p1bee87jsnc116a60c6e99',
+        'X-RapidAPI-Host': 'shazam-core.p.rapidapi.com'
+      }
+    };
+    fetch(url, options)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data, 'data');
+        setSongInformation(data);
+        setSection('information')
+      })
+    
+    fetch(relatedSongsUrl, options)
+      .then(res => res.json())
+      .then(data => setRelatedSongs(data))
+  }
+
   return (
     <>
       <div className="card">
@@ -67,7 +91,7 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
           {playButtonHidden && <img className="play-icon" id={id} onClick={playMusic} src={playIcon}  />}
         </div>
         <div className="song-info">
-          <div className="title">{correctedTitle}</div>
+          <div className="title" id={id} onClick={getSongInformation}>{correctedTitle}</div>
           <div className="artist">{artist}</div>
         </div>
       </div>

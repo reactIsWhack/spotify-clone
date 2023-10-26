@@ -35,7 +35,8 @@
   font-weight: bold;
   color: white;
   margin-top: 20px;
-  margin-bottom: 8px
+  margin-bottom: 8px;
+  cursor: pointer
 }
 
 .artist {
