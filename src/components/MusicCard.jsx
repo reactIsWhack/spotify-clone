@@ -2,12 +2,13 @@ import React, {useEffect, useState, useRef} from "react";
 import playIcon from "../assets/playIcon.svg";
 import pauseIcon from "../assets/pauseIcon.svg";
 
-export default function MusicCard({img, title, artist, songs, id, setAudios, audios, setIsPlaying, setSelectedAudio, setIsPaused, setSongInformation, setSection, setRelatedSongs}) {
+export default function MusicCard({img, title, artist, songs, id, setAudios, audios, section, setIsPlaying, setSelectedAudio, setIsPaused, setSongInformation, setSection, setRelatedSongs}) {
   
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();
   const restOfTitle = title.slice(1);
-  const correctedTitle = firstLetterCapitilized + restOfTitle;
+  const correctedTitle = firstLetterCapitilized + restOfTitle
+  
   const [playButtonHidden, setPlayButtonHidden] = useState(false);
 
   function handleMouseOver() {
@@ -88,10 +89,10 @@ export default function MusicCard({img, title, artist, songs, id, setAudios, aud
       <div className="card">
         <div onMouseOver={() => handleMouseOver()} onMouseLeave={handleMouseLeave} className="song-background">
           <img src={img} alt="song-background" />
-          {playButtonHidden && <img className="play-icon" id={id} onClick={playMusic} src={playIcon}  />}
+          {(playButtonHidden && (section === 'search' || section === 'discover' || section === 'topCharts')) && <img className="play-icon" id={id} onClick={playMusic} src={playIcon}  />}
         </div>
         <div className="song-info">
-          <div className="title" id={id} onClick={getSongInformation}>{correctedTitle}</div>
+          {(section === 'search' || section === 'discover' || section === 'topCharts') && <div className="title" id={id} onClick={getSongInformation}>{correctedTitle}</div>}
           <div className="artist">{artist}</div>
         </div>
       </div>

@@ -108,11 +108,6 @@ export default function SongNavbar({selectedAudio, setIsPaused, isPaused, setSel
     selectedAudio.audio.play()
   };
 
-  useEffect(() => {
-    if (selectedAudio.audio.ended && section === 'discover') {
-      fastForwardMusic()
-    }
-  }, [selectedAudio.audio.ended])
 
   return (
     <nav className="song-navbar">

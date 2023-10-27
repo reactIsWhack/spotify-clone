@@ -1,7 +1,7 @@
 import React from "react";
 import SongCard from "./SongCard";
 
-export default function SongInformation({songInformation, relatedSongs, setSelectedAudio, setAudios, setIsPlaying, selectedAudio, setIsPaused}) {
+export default function SongInformation({songInformation, relatedSongs, setSelectedAudio, setAudios, setIsPlaying, selectedAudio, setIsPaused, setSection, setArtistInformation}) {
 
   const lyrics = [];
 

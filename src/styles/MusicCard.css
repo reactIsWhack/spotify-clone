@@ -35,11 +35,12 @@
   font-weight: bold;
   color: white;
   margin-top: 20px;
-  margin-bottom: 8px;
   cursor: pointer
 }
 
 .artist {
   color: white;
-  font-size: 13px;;
+  font-size: 13px;
+  margin-top: 8px;
+
 }

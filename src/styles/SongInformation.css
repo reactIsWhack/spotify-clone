@@ -25,7 +25,8 @@
 
 .credentials-artist {
   font-size: 13px;
-  margin-bottom: 5px
+  margin-bottom: 5px;
+  cursor: pointer
 }
 
 .credentials-genres {

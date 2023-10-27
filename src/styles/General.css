@@ -53,6 +53,15 @@ main {
   flex-direction: column;
 }
 
+.top-artists-page,
+.top-charts-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+  width: 67%
+}
+
+
 div::-webkit-scrollbar{
   width: 0 !important
 }

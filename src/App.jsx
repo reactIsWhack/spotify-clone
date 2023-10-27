@@ -6,6 +6,8 @@ import SongNavbar from "./components/SongNavbar.jsx";
 import SongCard from "./components/SongCard";
 import TopArtists from "./components/TopArtists";
 import SongInformation from "./components/SongInformation";
+import TopArtistsSection from "./components/TopArtistsSection";
+import TopChartsSection from "./components/TopChartsSection";
 
 export default function App() {
 
@@ -42,9 +44,12 @@ export default function App() {
     } else if (section === 'search') {
       url = `https://shazam-core.p.rapidapi.com/v1/search/multi?query=${inputsData.song}&search_type=SONGS_ARTISTS`;
     } 
+    console.log(url)
 
     fetch(url, options)
-      .then(res => res.json())
+      .then(res => {
+        return res.json()
+      })
       .then(data => {
         if (section === 'search') {
           const hits = data.tracks.hits;
@@ -121,6 +126,37 @@ export default function App() {
      />
   });
 
+  const fullTopArtistCards = fullTopCharts.current.map(fullTopChart => {
+    return <TopArtistsSection 
+      img={fullTopChart.images.background}
+      artist={fullTopChart.subtitle}
+      title={fullTopChart.title}
+     />
+  });
+
+  const fullTopChartCards = fullTopCharts.current.map(fullTopChart => {
+    return <TopChartsSection 
+      songs={songs}
+      section={section}
+      id={fullTopChart.key}
+      img={fullTopChart.images.coverart}
+      title={fullTopChart.title}
+      artist={fullTopChart.subtitle}
+      setIsPlaying={setIsPlaying}
+      setAudios={setAudios}
+      audios={audios}
+      setSelectedAudio={setSelectedAudio}
+      setIsPaused={setIsPaused}
+      isPlaying={isPlaying}
+      setSection={setSection}
+      setSongInformation={setSongInformation}
+      setRelatedSongs={setRelatedSongs}
+     />
+  })
+  console.log(selectedAudio)
+
+  console.log(fullTopCharts)
+
   const topArtistsImages = topArtists.map(topArtist => {
     return <TopArtists img={topArtist.images.background} />
   })
@@ -144,17 +180,21 @@ export default function App() {
       ]
     })
   }
+  console.log(songs, 'songs')
+
 
   return (
     <div className="app">
-      <Sidebar setSection={setSection} setSongs={setSongs} section={section} setIsPlaying={setIsPlaying} setAudios={setAudios} />
+      <Sidebar setSection={setSection} setSongs={setSongs} section={section} setIsPlaying={setIsPlaying} setAudios={setAudios} topCharts={fullTopCharts} />
       <main>
-      <Navbar setInputsData={setInputsData} section={section} setSection={setSection} setSongs={setSongs} inputsData={inputsData} setIsPlaying={setIsPlaying} selectedAudio={selectedAudio} />
-        {section !== 'information' && <div className="music-section">
+      {(section === 'discover' || section === 'search' || section === 'topCharts') && <Navbar setInputsData={setInputsData} section={section} setSection={setSection} setSongs={setSongs} inputsData={inputsData} setIsPlaying={setIsPlaying} selectedAudio={selectedAudio} />}
+        {(section === 'discover' || section === 'search') && <div className="music-section">
           <div className="song-cards-container">
             {songCard}
           </div>
         </div>}
+        {section === 'topArtists' && <div className="top-artists-page">{fullTopArtistCards}</div>}
+        {section === 'topCharts' && <div className="top-charts-page">{fullTopChartCards}</div>}
         {section === 'information' && <SongInformation songInformation={songInformation} relatedSongs={relatedSongs} selectedAudio={selectedAudio} setAudios={setAudios} setSelectedAudio={setSelectedAudio} setIsPlaying={setIsPlaying} setIsPaused={setIsPaused} />}
         <div className="discover-sidebar">
           <div className="subtitle">

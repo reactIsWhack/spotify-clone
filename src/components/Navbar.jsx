@@ -35,7 +35,7 @@ export default function Navbar({setInputsData, setSection, setSongs, section, in
       const restOfLetters = title.slice(1);
       const lowerCaseLetters = restOfLetters.toLowerCase();
       return `Discover ${firstLetter + lowerCaseLetters}`
-    } else {
+    } else if (section === 'search') {
       return `Showing results for ${inputsData.song}`
     }
   }
@@ -46,8 +46,9 @@ export default function Navbar({setInputsData, setSection, setSongs, section, in
         <img className="search-icon" src={searchIcon} alt="search-icon" name="song" onClick={handleSubmit} />
         <input ref={input} type="text" name="song" placeholder="Search..." />
       </div>
+
       {(section !== 'information') && <div onChange={handleChange} value={inputsData.genre} className="genre-selector-container">
-        <div className="header">{editTitle()}</div>
+      <div className="header">{editTitle()}</div>
         <select name="genre">
           <option value="POP">Pop</option>
           <option value="HIP_HOP_RAP">Hip Hop</option>

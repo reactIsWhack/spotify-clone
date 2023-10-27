@@ -4,12 +4,11 @@ import locationIcon from "../assets/location.svg";
 import peopleIcon from "../assets/people.svg";
 import chartIcon from "../assets/chart.svg";
 
-export default function Sidebar({setSection, setSongs, section, setIsPlaying, setAudios}) {
+export default function Sidebar({setSection, setSongs, section, setIsPlaying, setAudios, topCharts}) {
 
   function handleClick(e) {
     setSection(e.target.getAttribute("section"));
     setIsPlaying(false);
-    setSongs((prevSongs) => section === 'discover' ? prevSongs : []);
     setAudios(prevAudios => {
       return prevAudios.map(prevAudio => {
         prevAudio.audio.pause();
@@ -17,6 +16,9 @@ export default function Sidebar({setSection, setSongs, section, setIsPlaying, se
         return prevAudio
       })
     })
+    if (section === 'topCharts') {
+      setSongs(topCharts.current)
+    }
   }
 
   return (
