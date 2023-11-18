@@ -10,4 +10,4 @@ import "./styles/SongCard.css";
 import "./styles/TopArtists.css";
 import "./styles/SongInformation.css";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));

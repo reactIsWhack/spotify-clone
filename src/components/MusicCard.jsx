@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import playIcon from "../assets/playIcon.svg";
 import pauseIcon from "../assets/pauseIcon.svg";
 import addIcon from "../assets/add.svg";
+import trashIcon from "../assets/trashIcon.svg";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function MusicCard({
   img,
@@ -18,6 +20,9 @@ export default function MusicCard({
   setSongInformation,
   setSection,
   setRelatedSongs,
+  setPlaylist,
+  song,
+  playlist,
 }) {
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();
@@ -91,7 +96,6 @@ export default function MusicCard({
     fetch(url, options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "data");
         setSongInformation(data);
         setSection("information");
       });
@@ -99,6 +103,29 @@ export default function MusicCard({
     fetch(relatedSongsUrl, options)
       .then((res) => res.json())
       .then((data) => setRelatedSongs(data));
+  }
+
+  function addToPlaylist(e) {
+    const songId = e.currentTarget.id;
+    console.log(songId);
+    const playlistSong = songs.find((song) => song.key === songId);
+    const duplicatedSong = playlist.find(
+      (likedSong) => likedSong.key === songId
+    );
+    if (duplicatedSong) {
+      return toast.error("Song already in playlist");
+    }
+    setPlaylist((prevPlaylist) => [...prevPlaylist, playlistSong]);
+    toast.success("Added song to playlist!");
+  }
+
+  function removeFromPlaylist(e) {
+    const songId = e.currentTarget.id;
+    console.log(songId);
+    setPlaylist((prevPlaylist) => {
+      return prevPlaylist.filter((playlistSong) => playlistSong.key !== songId);
+    });
+    toast.success("Song removed from playlist!");
   }
 
   return (
@@ -113,6 +140,7 @@ export default function MusicCard({
           {playButtonHidden &&
             (section === "search" ||
               section === "discover" ||
+              section === "playlist" ||
               section === "topCharts") && (
               <img
                 className="play-icon"
@@ -125,15 +153,27 @@ export default function MusicCard({
         <div className="song-info">
           {(section === "search" ||
             section === "discover" ||
+            section === "playlist" ||
             section === "topCharts") && (
             <div className="title" id={id} onClick={getSongInformation}>
               {correctedTitle}
             </div>
           )}
           <div className="artist">{artist}</div>
-          <div className="add-icon">
-            <img src={addIcon} />
-          </div>
+          {section !== "topArtists" && (
+            <div className="add-icon">
+              {section === "playlist" ? (
+                <img
+                  src={trashIcon}
+                  onClick={removeFromPlaylist}
+                  className="trash-icon"
+                  id={id}
+                />
+              ) : (
+                <img src={addIcon} onClick={addToPlaylist} id={id} />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

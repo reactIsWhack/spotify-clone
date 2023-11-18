@@ -11,10 +11,26 @@ export default function Sidebar({
   setIsPlaying,
   setAudios,
   topCharts,
+  playlist,
 }) {
   function handleClick(e) {
-    setSection(e.target.id);
+    // Set the new section based on the clicked element's ID
+    const newSection = e.target.id;
+    setSection(newSection);
+
+    // Reset the playing state
     setIsPlaying(false);
+
+    // Check the new section and set songs accordingly
+    if (newSection === "topCharts") {
+      setSongs(topCharts.current);
+      console.log("Setting topCharts songs");
+    } else {
+      setSongs(playlist);
+      console.log("Setting playlist songs");
+    }
+
+    // Pause and reset all audio elements
     setAudios((prevAudios) => {
       return prevAudios.map((prevAudio) => {
         prevAudio.audio.pause();
@@ -22,10 +38,9 @@ export default function Sidebar({
         return prevAudio;
       });
     });
-    if (section === "topCharts") {
-      setSongs(topCharts.current);
-    }
   }
+
+  console.log(section);
 
   return (
     <div className="sidebar">

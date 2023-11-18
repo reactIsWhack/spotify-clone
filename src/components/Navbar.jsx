@@ -34,7 +34,6 @@ export default function Navbar({
     }));
   }
 
-  console.log(section, "section");
   return (
     <nav>
       <div className="input-container">

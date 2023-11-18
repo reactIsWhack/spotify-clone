@@ -1,23 +1,22 @@
 import React from "react";
 import MusicCard from "./MusicCard";
 
-export default function TopChartsSection({
+export default function Playlist({
+  songs,
+  section,
+  id,
   img,
   title,
   artist,
-  songs,
-  id,
+  setIsPlaying,
   setAudios,
   audios,
-  section,
-  setIsPlaying,
   setSelectedAudio,
   setIsPaused,
-  setSongInformation,
-  setSection,
-  setRelatedSongs,
   isPlaying,
-  playlist,
+  setSection,
+  setSongInformation,
+  setRelatedSongs,
   setPlaylist,
 }) {
   return (
@@ -37,7 +36,6 @@ export default function TopChartsSection({
       setSection={setSection}
       setSongInformation={setSongInformation}
       setRelatedSongs={setRelatedSongs}
-      playlist={playlist}
       setPlaylist={setPlaylist}
     />
   );

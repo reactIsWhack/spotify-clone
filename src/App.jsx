@@ -8,6 +8,9 @@ import TopArtists from "./components/TopArtists";
 import SongInformation from "./components/SongInformation";
 import TopArtistsSection from "./components/TopArtistsSection";
 import TopChartsSection from "./components/TopChartsSection";
+import Playlist from "./components/Playlist.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   const [inputsData, setInputsData] = useState({
@@ -28,6 +31,7 @@ export default function App() {
   const [topArtistCount, setTopArtistCount] = useState(15);
   const [songInformation, setSongInformation] = useState({});
   const [relatedSongs, setRelatedSongs] = useState([]);
+  const [playlist, setPlaylist] = useState([]);
   const options = {
     method: "GET",
     headers: {
@@ -35,7 +39,6 @@ export default function App() {
       "X-RapidAPI-Host": "shazam-core.p.rapidapi.com",
     },
   };
-
   useEffect(() => {
     let url;
     if (section === "discover") {
@@ -57,7 +60,6 @@ export default function App() {
         }
       });
   }, [inputsData.genre, section, inputsData.song]);
-  console.log(topCharts, "top");
 
   useEffect(() => {
     const url = "https://shazam-core.p.rapidapi.com/v1/charts/world";
@@ -68,6 +70,10 @@ export default function App() {
         setTopCharts(fullTopCharts.current.slice(0, 5));
         setTopArtsits(fullTopCharts.current.slice(0, 10));
       });
+
+    if (section === "topCharts") {
+      setSongs(fullTopCharts.current);
+    }
   }, []);
 
   const songCard = songs.map((song) => {
@@ -89,6 +95,36 @@ export default function App() {
         setSection={setSection}
         setSongInformation={setSongInformation}
         setRelatedSongs={setRelatedSongs}
+        setPlaylist={setPlaylist}
+        song={song}
+        playlist={playlist}
+      />
+    );
+  });
+
+  console.log(playlist, "playlist");
+
+  const playlistCards = playlist.map((playlistSong) => {
+    const coverart = playlistSong.images && playlistSong.images.coverart;
+
+    return (
+      <Playlist
+        songs={songs}
+        section={section}
+        id={playlistSong.key}
+        img={coverart}
+        title={playlistSong.title}
+        artist={playlistSong.subtitle}
+        setIsPlaying={setIsPlaying}
+        setAudios={setAudios}
+        audios={audios}
+        setSelectedAudio={setSelectedAudio}
+        setIsPaused={setIsPaused}
+        isPlaying={isPlaying}
+        setSection={setSection}
+        setSongInformation={setSongInformation}
+        setRelatedSongs={setRelatedSongs}
+        setPlaylist={setPlaylist}
       />
     );
   });
@@ -144,12 +180,11 @@ export default function App() {
         setSection={setSection}
         setSongInformation={setSongInformation}
         setRelatedSongs={setRelatedSongs}
+        playlist={playlist}
+        setPlaylist={setPlaylist}
       />
     );
   });
-  // console.log(selectedAudio);
-
-  // console.log(fullTopCharts);
 
   const topArtistsImages = topArtists.map((topArtist) => {
     return <TopArtists img={topArtist.images.background} />;
@@ -182,14 +217,13 @@ export default function App() {
     } else if (section === "search") {
       return `Showing results for ${inputsData.song}`;
     } else if (section === "topArtists") {
-      console.log("ran");
       return "Top Artists";
     } else {
       return "Top Charts";
     }
   }
+
   console.log(songs, "songs");
-  console.log(topArtists, "topArtistImages");
 
   return (
     <div className="app">
@@ -200,6 +234,7 @@ export default function App() {
         setIsPlaying={setIsPlaying}
         setAudios={setAudios}
         topCharts={fullTopCharts}
+        playlist={playlist}
       />
       <main>
         {(section === "discover" ||
@@ -221,6 +256,9 @@ export default function App() {
           <div className="music-section">
             <div className="song-cards-container">{songCard}</div>
           </div>
+        )}
+        {section === "playlist" && (
+          <div className="playlist-page">{playlistCards}</div>
         )}
         {section === "topArtists" && (
           <div className="top-artists-page">{fullTopArtistCards}</div>
@@ -270,6 +308,7 @@ export default function App() {
           setAudios={setAudios}
         />
       )}
+      <ToastContainer />
     </div>
   );
 }
