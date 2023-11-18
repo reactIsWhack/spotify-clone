@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   margin: 0;
   gap: 18px;
-  margin-top: 24px
+  margin-top: 24px;
 }
 
 .song-background {
@@ -14,7 +14,7 @@
 }
 
 .song-background > img {
-  height: 200px
+  height: 200px;
 }
 
 .play-icon,
@@ -22,12 +22,12 @@
   position: absolute;
   z-index: 1;
   cursor: pointer;
-  width: 90px
+  width: 90px;
 }
 
 .card {
   padding: 13px;
-  background-color:  rgba(75, 73, 73, 0.5);
+  background-color: rgba(75, 73, 73, 0.5);
   border-radius: 8px;
 }
 
@@ -35,12 +35,21 @@
   font-weight: bold;
   color: white;
   margin-top: 20px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .artist {
   color: white;
   font-size: 13px;
   margin-top: 8px;
+}
 
+.add-icon {
+  display: flex;
+  justify-content: right;
+  cursor: pointer;
+}
+
+.add-icon img {
+  height: 20px;
 }
