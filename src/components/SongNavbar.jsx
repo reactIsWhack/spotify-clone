@@ -123,9 +123,7 @@ export default function SongNavbar({
       <div className="nav-song-info">
         <img
           className="artist-image"
-          src={
-            selectedAudio.song.images && selectedAudio.song.images.coverarthq
-          }
+          src={selectedAudio.song.images && selectedAudio.song.images.coverart}
           style={styles}
         />
         <div>

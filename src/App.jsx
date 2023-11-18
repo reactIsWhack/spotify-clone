@@ -11,6 +11,7 @@ import TopChartsSection from "./components/TopChartsSection";
 import Playlist from "./components/Playlist.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function App() {
   const [inputsData, setInputsData] = useState({
@@ -61,6 +62,15 @@ export default function App() {
       });
   }, [inputsData.genre, section, inputsData.song]);
 
+  const getSongs = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:5000/api/songs");
+      setPlaylist(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     const url = "https://shazam-core.p.rapidapi.com/v1/charts/world";
     fetch(url, options)
@@ -74,6 +84,7 @@ export default function App() {
     if (section === "topCharts") {
       setSongs(fullTopCharts.current);
     }
+    getSongs();
   }, []);
 
   const songCard = songs.map((song) => {
@@ -98,6 +109,7 @@ export default function App() {
         setPlaylist={setPlaylist}
         song={song}
         playlist={playlist}
+        selectedAudio={selectedAudio}
       />
     );
   });

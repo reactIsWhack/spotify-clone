@@ -4,6 +4,7 @@ import pauseIcon from "../assets/pauseIcon.svg";
 import addIcon from "../assets/add.svg";
 import trashIcon from "../assets/trashIcon.svg";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 export default function MusicCard({
   img,
@@ -21,8 +22,9 @@ export default function MusicCard({
   setSection,
   setRelatedSongs,
   setPlaylist,
-  song,
+  selectedAudio,
   playlist,
+  song,
 }) {
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();
@@ -59,7 +61,7 @@ export default function MusicCard({
       }
       // checks if the user clicks on a song that they had previousoly clicked on
     });
-    audios.push({ audio: a, song: selectedSong });
+    audios.push({ audio: a, song: selectedSong, playing: true });
     const songsNotPlaying = audios.filter((audio) => audio.song.key !== id);
     const mutedSongs = songsNotPlaying.map((song) => {
       song.audio.pause();
@@ -105,18 +107,36 @@ export default function MusicCard({
       .then((data) => setRelatedSongs(data));
   }
 
-  function addToPlaylist(e) {
+  async function addToPlaylist(e) {
     const songId = e.currentTarget.id;
-    console.log(songId);
-    const playlistSong = songs.find((song) => song.key === songId);
     const duplicatedSong = playlist.find(
       (likedSong) => likedSong.key === songId
     );
     if (duplicatedSong) {
       return toast.error("Song already in playlist");
     }
-    setPlaylist((prevPlaylist) => [...prevPlaylist, playlistSong]);
-    toast.success("Added song to playlist!");
+    const songData = {
+      title: song.title,
+      subtitle: song.subtitle,
+      images: {
+        coverart: song.images.coverart,
+      },
+      hub: {
+        actions: song.hub.actions,
+      },
+      key: song.key,
+    };
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/songs",
+        songData
+      );
+
+      setPlaylist((prevPlaylist) => [...prevPlaylist, data]);
+      toast.success("Added song to playlist!");
+    } catch (error) {
+      toast.error("Failed to add song to playlist");
+    }
   }
 
   function removeFromPlaylist(e) {
