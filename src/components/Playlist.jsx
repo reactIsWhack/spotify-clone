@@ -18,6 +18,8 @@ export default function Playlist({
   setSongInformation,
   setRelatedSongs,
   setPlaylist,
+  playlist,
+  getSongs,
 }) {
   return (
     <MusicCard
@@ -37,6 +39,8 @@ export default function Playlist({
       setSongInformation={setSongInformation}
       setRelatedSongs={setRelatedSongs}
       setPlaylist={setPlaylist}
+      playlist={playlist}
+      getSongs={getSongs}
     />
   );
 }

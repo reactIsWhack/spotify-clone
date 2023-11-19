@@ -48,28 +48,26 @@ export default function Navbar({
       </div>
 
       {section !== "information" && (
-        <div
-          onChange={handleChange}
-          value={inputsData.genre}
-          className="genre-selector-container"
-        >
+        <div onChange={handleChange} className="genre-selector-container">
           <div className="header">{editTitle()}</div>
-          <select name="genre">
-            <option value="POP">Pop</option>
-            <option value="HIP_HOP_RAP">Hip Hop</option>
-            <option value="DANCE">Dance</option>
-            <option value="ELECTRONIC">Electronic</option>
-            <option value="SOUL_RNB">Soul</option>
-            <option value="ALTERNATIVE">Alternative</option>
-            <option value="ROCK">Rock</option>
-            <option value="LATIN">Latin</option>
-            <option value="FILM_TV">Film</option>
-            <option value="COUNTRY">Country</option>
-            <option value="WORLDWIDE">Worldwide</option>
-            <option value="REGGAE_Dance_Hall">Reggae</option>
-            <option value="HOUSE">House</option>
-            <option value="K_POP">K-Pop</option>
-          </select>
+          {section === "discover" && (
+            <select name="genre" value={inputsData.genre}>
+              <option value="POP">Pop</option>
+              <option value="HIP_HOP_RAP">Hip Hop</option>
+              <option value="DANCE">Dance</option>
+              <option value="ELECTRONIC">Electronic</option>
+              <option value="SOUL_RNB">Soul</option>
+              <option value="ALTERNATIVE">Alternative</option>
+              <option value="ROCK">Rock</option>
+              <option value="LATIN">Latin</option>
+              <option value="FILM_TV">Film</option>
+              <option value="COUNTRY">Country</option>
+              <option value="WORLDWIDE">Worldwide</option>
+              <option value="REGGAE_Dance_Hall">Reggae</option>
+              <option value="HOUSE">House</option>
+              <option value="K_POP">K-Pop</option>
+            </select>
+          )}
         </div>
       )}
     </nav>

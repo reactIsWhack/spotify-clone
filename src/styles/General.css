@@ -74,9 +74,10 @@ div::-webkit-scrollbar {
 .discover-sidebar {
   padding-top: 24px;
   margin-left: 24px;
-  position: fixed;
-  right: 14px;
-  width: 27%;
+  position: absolute;
+  right: 12px;
+  width: 33%;
+  padding-bottom: 200px;
 }
 
 .top-charts-container {

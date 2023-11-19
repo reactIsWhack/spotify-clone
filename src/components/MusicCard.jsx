@@ -22,9 +22,9 @@ export default function MusicCard({
   setSection,
   setRelatedSongs,
   setPlaylist,
-  selectedAudio,
   playlist,
   song,
+  getSongs,
 }) {
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();
@@ -139,12 +139,15 @@ export default function MusicCard({
     }
   }
 
-  function removeFromPlaylist(e) {
+  async function removeFromPlaylist(e) {
     const songId = e.currentTarget.id;
-    console.log(songId);
-    setPlaylist((prevPlaylist) => {
-      return prevPlaylist.filter((playlistSong) => playlistSong.key !== songId);
-    });
+    const deletedPlaylistSong = playlist.find(
+      (playlistSong) => playlistSong.key === songId
+    );
+    await axios.delete(
+      `http://localhost:5000/api/songs/${deletedPlaylistSong._id}`
+    );
+    getSongs();
     toast.success("Song removed from playlist!");
   }
 
@@ -180,20 +183,22 @@ export default function MusicCard({
             </div>
           )}
           <div className="artist">{artist}</div>
-          {section !== "topArtists" && (
-            <div className="add-icon">
-              {section === "playlist" ? (
-                <img
-                  src={trashIcon}
-                  onClick={removeFromPlaylist}
-                  className="trash-icon"
-                  id={id}
-                />
-              ) : (
+          <div className="add-icon">
+            {section === "playlist" ? (
+              <img
+                src={trashIcon}
+                onClick={removeFromPlaylist}
+                className="trash-icon"
+                id={id}
+              />
+            ) : (
+              (section === "discover" ||
+                section === "search" ||
+                section === "topCharts") && (
                 <img src={addIcon} onClick={addToPlaylist} id={id} />
-              )}
-            </div>
-          )}
+              )
+            )}
+          </div>
         </div>
       </div>
     </>

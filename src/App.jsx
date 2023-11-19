@@ -109,7 +109,6 @@ export default function App() {
         setPlaylist={setPlaylist}
         song={song}
         playlist={playlist}
-        selectedAudio={selectedAudio}
       />
     );
   });
@@ -137,6 +136,8 @@ export default function App() {
         setSongInformation={setSongInformation}
         setRelatedSongs={setRelatedSongs}
         setPlaylist={setPlaylist}
+        playlist={playlist}
+        getSongs={getSongs}
       />
     );
   });
@@ -194,6 +195,7 @@ export default function App() {
         setRelatedSongs={setRelatedSongs}
         playlist={playlist}
         setPlaylist={setPlaylist}
+        fullTopChart={fullTopChart}
       />
     );
   });
@@ -230,6 +232,8 @@ export default function App() {
       return `Showing results for ${inputsData.song}`;
     } else if (section === "topArtists") {
       return "Top Artists";
+    } else if (section === "playlist") {
+      return "Playlist";
     } else {
       return "Top Charts";
     }
@@ -252,6 +256,7 @@ export default function App() {
         {(section === "discover" ||
           section === "search" ||
           section === "topCharts" ||
+          section === "playlist" ||
           section === "information") && (
           <Navbar
             setInputsData={setInputsData}

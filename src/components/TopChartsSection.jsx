@@ -19,6 +19,7 @@ export default function TopChartsSection({
   isPlaying,
   playlist,
   setPlaylist,
+  fullTopChart,
 }) {
   return (
     <MusicCard
@@ -39,6 +40,7 @@ export default function TopChartsSection({
       setRelatedSongs={setRelatedSongs}
       playlist={playlist}
       setPlaylist={setPlaylist}
+      song={fullTopChart}
     />
   );
 }

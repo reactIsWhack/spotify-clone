@@ -18,7 +18,18 @@ const getSongs = async (req, res) => {
   }
 };
 
+const deleteSong = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Song.findByIdAndDelete(id);
+    res.status(200).json("Song deleted from playlist");
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 module.exports = {
   addSong,
   getSongs,
+  deleteSong,
 };
