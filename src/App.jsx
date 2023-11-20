@@ -66,6 +66,7 @@ export default function App() {
     try {
       const { data } = await axios.get("http://localhost:5000/api/songs");
       setPlaylist(data);
+      setSongs(data);
     } catch (error) {
       console.log(error.message);
     }
@@ -109,6 +110,7 @@ export default function App() {
         setPlaylist={setPlaylist}
         song={song}
         playlist={playlist}
+        setSongs={setSongs}
       />
     );
   });
@@ -138,6 +140,7 @@ export default function App() {
         setPlaylist={setPlaylist}
         playlist={playlist}
         getSongs={getSongs}
+        setSongs={setSongs}
       />
     );
   });

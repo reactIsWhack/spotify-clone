@@ -20,6 +20,7 @@ export default function Playlist({
   setPlaylist,
   playlist,
   getSongs,
+  setSongs,
 }) {
   return (
     <MusicCard
@@ -41,6 +42,7 @@ export default function Playlist({
       setPlaylist={setPlaylist}
       playlist={playlist}
       getSongs={getSongs}
+      setSongs={setSongs}
     />
   );
 }

@@ -25,6 +25,8 @@ export default function MusicCard({
   playlist,
   song,
   getSongs,
+  setSongs,
+  playlistRef,
 }) {
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();
@@ -148,6 +150,7 @@ export default function MusicCard({
       `http://localhost:5000/api/songs/${deletedPlaylistSong._id}`
     );
     getSongs();
+    setSongs(playlist);
     toast.success("Song removed from playlist!");
   }
 
