@@ -326,6 +326,8 @@ export default function App() {
           setSelectedAudio={setSelectedAudio}
           songs={songs}
           setAudios={setAudios}
+          playlist={playlist}
+          setPlaylist={setPlaylist}
         />
       )}
       <ToastContainer />

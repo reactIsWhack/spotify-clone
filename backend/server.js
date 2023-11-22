@@ -2,13 +2,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
-const router = require("./routes/songRoute");
+const songRouter = require("./routes/songRoute");
+const errorMiddleware = require("./middleware/errorMiddleware");
+const userRouter = require("./routes/userRoute");
 const PORT = 5000;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use("/api/songs", router);
+app.use("/api/songs", songRouter);
+app.use("/api/users", userRouter);
+
+app.use(errorMiddleware);
 
 const connectDB = async () => {
   try {
