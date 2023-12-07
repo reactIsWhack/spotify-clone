@@ -64,7 +64,7 @@ export default function App() {
 
   const getSongs = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/songs");
+      const { data } = await axios.get("/api/songs");
       setPlaylist(data);
       setSongs(data);
     } catch (error) {

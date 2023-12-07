@@ -128,10 +128,7 @@ export default function MusicCard({
       key: song.key,
     };
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/songs",
-        songData
-      );
+      const { data } = await axios.post("/api/songs", songData);
 
       setPlaylist((prevPlaylist) => [...prevPlaylist, data]);
       toast.success("Added song to playlist!");
@@ -145,9 +142,7 @@ export default function MusicCard({
     const deletedPlaylistSong = playlist.find(
       (playlistSong) => playlistSong.key === songId
     );
-    await axios.delete(
-      `http://localhost:5000/api/songs/${deletedPlaylistSong._id}`
-    );
+    await axios.delete(`/api/songs/${deletedPlaylistSong._id}`);
     getSongs();
     setSongs(playlist);
     toast.success("Song removed from playlist!");
