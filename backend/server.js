@@ -12,6 +12,10 @@ app.use(express.static("dist"));
 
 app.use("/api/songs", router);
 
+app.get("/", (req, res) => {
+  res.send("Home Page");
+});
+
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.URI);
