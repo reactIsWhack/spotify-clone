@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
 import pauseIcon from "../assets/pauseIcon.svg";
 import playIcon from "../assets/play-icon-2.svg";
 import fastForwardIcon from "../assets/fast-forward.svg";
@@ -8,7 +6,6 @@ import rewindIcon from "../assets/rewind.svg";
 import replayIcon from "../assets/replay.svg";
 import spinIcon from "../assets/spin.svg";
 import volumeIcon from "../assets/volume.svg";
-import addIcon from "../assets/add.svg";
 
 export default function SongNavbar({
   selectedAudio,
@@ -17,14 +14,9 @@ export default function SongNavbar({
   setSelectedAudio,
   songs,
   setAudios,
-  playlist,
-  setPlaylist,
   section,
 }) {
   const song = songs.find((song) => song.key === selectedAudio.song.key);
-  const isPlaylistSong = playlist.find(
-    (song) => song.key === selectedAudio.song.key
-  );
   const index = songs.indexOf(song);
   const [isSpinning, setIsSpinning] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -126,41 +118,6 @@ export default function SongNavbar({
     selectedAudio.audio.play();
   };
 
-  const addTopPlaylist = async () => {
-    const songId = selectedAudio.song.key;
-    const duplicatedSong = playlist.find(
-      (likedSong) => likedSong.key === songId
-    );
-    if (duplicatedSong) {
-      return toast.error("Song already in playlist");
-    }
-    const songData = {
-      title: selectedAudio.song.title,
-      subtitle: selectedAudio.song.subtitle,
-      images: {
-        coverart: selectedAudio.song.images.coverart,
-      },
-      hub: {
-        actions: selectedAudio.song.hub.actions,
-      },
-      key: selectedAudio.song.key,
-    };
-    try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/songs",
-        songData
-      );
-
-      console.log(data);
-      setPlaylist((prevPlaylist) => [...prevPlaylist, data]);
-      toast.success("Added song to playlist!");
-    } catch (error) {
-      toast.error("Failed to add song to playlist");
-    }
-  };
-
-  console.log(isPlaylistSong, "boolean");
-
   return (
     <nav className="song-navbar">
       <div className="nav-song-info">
@@ -215,14 +172,6 @@ export default function SongNavbar({
         </div>
       </div>
       <div className="volume-container">
-        {section !== "playlist" && (
-          <img
-            src={addIcon}
-            style={{ height: "30px", marginRight: "20px", cursor: "pointer" }}
-            onClick={addTopPlaylist}
-          />
-        )}
-
         <img src={volumeIcon} className="volume-icon" />
         <input
           type="range"

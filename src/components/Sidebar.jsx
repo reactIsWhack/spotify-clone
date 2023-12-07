@@ -25,7 +25,7 @@ export default function Sidebar({
     if (newSection === "topCharts") {
       setSongs(topCharts.current);
       console.log("Setting topCharts songs");
-    } else if (newSection === "playlist") {
+    } else {
       setSongs(playlist);
       console.log("Setting playlist songs");
     }

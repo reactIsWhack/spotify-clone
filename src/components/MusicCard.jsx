@@ -26,7 +26,6 @@ export default function MusicCard({
   song,
   getSongs,
   setSongs,
-  playlistRef,
 }) {
   const firstLetterOfTitle = title[0];
   const firstLetterCapitilized = firstLetterOfTitle.toUpperCase();

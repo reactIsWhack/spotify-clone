@@ -61,6 +61,15 @@ main {
   gap: 18px;
   width: 67%;
   margin-top: 20px;
+  min-height: 100vh;
+}
+
+.p-notif {
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  min-width: 100vh;
+  font-size: 30px;
 }
 
 div::-webkit-scrollbar {

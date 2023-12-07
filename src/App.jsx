@@ -278,7 +278,13 @@ export default function App() {
           </div>
         )}
         {section === "playlist" && (
-          <div className="playlist-page">{playlistCards}</div>
+          <div className="playlist-page">
+            {playlist.length ? (
+              playlistCards
+            ) : (
+              <div className="p-notif">No songs in playlist</div>
+            )}
+          </div>
         )}
         {section === "topArtists" && (
           <div className="top-artists-page">{fullTopArtistCards}</div>
@@ -326,8 +332,6 @@ export default function App() {
           setSelectedAudio={setSelectedAudio}
           songs={songs}
           setAudios={setAudios}
-          playlist={playlist}
-          setPlaylist={setPlaylist}
         />
       )}
       <ToastContainer />
