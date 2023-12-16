@@ -73,7 +73,9 @@ function AppContent() {
 
   const getSongs = async () => {
     try {
-      const { data } = await axios.get("/api/songs");
+      const { data } = await axios.get(
+        "https://lyriks-n8iv.onrender.com/api/songs"
+      );
       setPlaylist(data);
       setSongs(data);
     } catch (error) {
