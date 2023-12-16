@@ -9,5 +9,11 @@ import "./styles/SongNavbar.css";
 import "./styles/SongCard.css";
 import "./styles/TopArtists.css";
 import "./styles/SongInformation.css";
+import { BrowserRouter } from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById("root")
+);

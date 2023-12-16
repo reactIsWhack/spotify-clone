@@ -12,8 +12,17 @@ import Playlist from "./components/Playlist.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { Routes, Route } from "react-router-dom";
 
 export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<AppContent />}></Route>
+    </Routes>
+  );
+}
+
+function AppContent() {
   const [inputsData, setInputsData] = useState({
     song: "",
     genre: "POP",
