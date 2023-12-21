@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  width: 220px
+  width: 220px;
 }
 
 .logo-container {
@@ -14,11 +14,11 @@
 }
 
 .logo-container img {
-  height: 60px
+  height: 60px;
 }
 
 .links {
-  margin-top: 4em
+  margin-top: 4em;
 }
 
 .link-container {
@@ -31,4 +31,20 @@
   color: #e5e7eb;
   margin-left: 6px;
   cursor: pointer;
+}
+
+.git-hub-link img {
+  height: 40px;
+  margin-right: 8px;
+}
+
+.git-hub-link {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.git-hub-link a {
+  text-decoration: none;
+  color: white;
 }

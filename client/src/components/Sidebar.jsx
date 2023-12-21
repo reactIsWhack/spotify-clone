@@ -3,6 +3,7 @@ import homeIcon from "../assets/home.svg";
 import locationIcon from "../assets/location.svg";
 import peopleIcon from "../assets/people.svg";
 import chartIcon from "../assets/chart.svg";
+import githubCat from "../assets/githubCat.svg";
 
 export default function Sidebar({
   setSection,
@@ -74,6 +75,15 @@ export default function Sidebar({
           <div className="label" id="topCharts" onClick={handleClick}>
             Top Charts
           </div>
+        </div>
+        <div className="git-hub-link">
+          <img src={githubCat} alt="git-hub" />
+          <a
+            href="https://github.com/reactIsWhack/spotify-clone"
+            target="_blank"
+          >
+            GitHub Repo
+          </a>
         </div>
       </div>
     </div>
